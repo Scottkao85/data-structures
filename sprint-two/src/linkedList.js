@@ -3,37 +3,35 @@ var LinkedList = function(){
   list.head = null;
   list.tail = null;
 
+//  O(1) Constant
   list.addToTail = function(value){
     if (list.head === null && list.tail === null){
       list.head = Node(value);
       list.tail = list.head;
-      // list.tail points to the new Node(value) we're creating
     }else {
       list.tail.next = Node(value);
       list.tail = list.tail.next;
     }
-
-
   };
 
+//  O(1)
   list.removeHead = function(){
     if(list.head !== null) {
       var result = list.head.value;
-      var temp = list.head;
       list.head = list.head.next;
-      delete temp;
     }
     return result;
   };
 
+//  O(N)
   list.contains = function(target){
     var searchList = function(target, node) {
-      if( node.next === null ){
-        return false;
-      } else if( node.value === target ){
+      if( node.value === target ){
         return true;
+      } else if( node.next === null ){
+        return false;
       } else {
-        searchList(target, node.next);
+        return searchList(target, node.next);
       }
     };
     return searchList(target, list.head);
