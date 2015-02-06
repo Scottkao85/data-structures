@@ -11,43 +11,44 @@ var Tree = function(value){
 };
 
 
-
-
-
 var treeMethods = {};
 
+// O(1)
 treeMethods.addChild = function(value){
   this.children.push(Tree(value));
 };
 
+// O(N) Note: Terminates on target, executes <= N
 treeMethods.contains = function(target){
-  var result = false;
-  var searchTree = function(target, tree){
-    if (tree.value === target){
-      result = true;
-    // }else if(tree.children.length === 0){
-    //   return false;
-    }else {
-      for(var i = 0; i < tree.children.length; i++){
-        searchTree(target, tree.children[i]);
+  var shortCircuit = false;
+  var searchTree = function(target, theChildren){
+    for(var i = 0; i < theChildren.length; i++){
+      if(theChildren[i].value === target){
+        shortCircuit = true;
+        break;
+      }
+      else if(theChildren[i].children.length > 0) { //( result !== true ) {
+        searchTree(target, theChildren[i].children);
       }
     }
-    searchTree(target, this);
-    return result;
   };
-};
+  if( this.value === target) {
+    return true;
+  }
+  searchTree(target, this.children);
 
+  if( !shortCircuit ){
+    return false;
+  } else {
+    return true;
+  }
+};
 
 var extend = function(to, from) {
   for (var key in from) {
     to[key] = from[key];
   }
 };
-
-// var pine = Tree('Parents');
-
-// pine.value(); // 'Parents'
-
 
 
 /*
