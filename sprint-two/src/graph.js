@@ -1,12 +1,16 @@
 
 
 var Graph = function(){
+  this.storage = {};
 };
 
 Graph.prototype.addNode = function(node){
+  this.storage[node] = node;
+  //console.log("Storage: ", this.storage, "Node: ", node);
 };
 
 Graph.prototype.contains = function(node){
+  return node in this.storage;
 };
 
 Graph.prototype.removeNode = function(node){
@@ -29,4 +33,7 @@ Graph.prototype.forEachNode = function(cb){
  */
 
 
+var test = new Graph();
+
+test.addNode('cat');
 
