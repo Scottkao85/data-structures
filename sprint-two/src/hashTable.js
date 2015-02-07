@@ -5,6 +5,7 @@ var HashTable = function(){
     this._storage[i] = [];
   }
 };
+
 //O(1)
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
@@ -21,6 +22,7 @@ HashTable.prototype.retrieve = function(k){
   }
   return null;
 };
+
 //O(1) could use linked-list(extra credit)
 HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
@@ -31,8 +33,6 @@ HashTable.prototype.remove = function(k){
     }
   }
 };
-
-
 
 /*
  * Complexity: What is the time complexity of the above functions?
