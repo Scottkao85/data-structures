@@ -96,6 +96,83 @@ BinarySearchTree.prototype.depthFirstLog = function(callback){
   }
 };
 
+//worth hi-chews
+//iterate across given array
+  // callback each tree's value
+  // if children left
+    // store in children array
+  // if children right
+    // store in children array
+
+// Can re-implement using QUEUEp9
+BinarySearchTree.prototype.breadthFirstLog = function(callback){
+  callback(this.value);
+  var children = [];
+  if(this.left !== undefined ){
+    children.push(this.left);
+  }
+  if(this.right !== undefined){
+    children.push(this.right);
+  }
+  var breadthFunc = function(callback, children){
+    var nextChildren = [];
+    for(var i = 0; i < children.length; i++){
+      callback(children[i].value);
+      if(children[i].left !== undefined){
+        nextChildren.push(children[i].left);
+      }
+      if(children[i].right !== undefined){
+        nextChildren.push(children[i].right);
+      }
+    }
+    if( nextChildren.length > 0 ){
+      breadthFunc(callback, nextChildren);
+    }
+  };
+  breadthFunc(callback, children);
+};
+
+//worth lots of hi-chews
+
+// Save every element to sorted array
+  //for whole array
+  // save the middle number
+  // save left mid/right mid
+
+
+
+
+BinarySearchTree.prototype.rebalanceTree = function(){
+  var tempArr = [];
+  var balancedArr = [];
+  this.breadthFirstLog(function(value){ tempArr.push(value); });
+  tempArr.sort(function(a,b){ return a-b; });
+
+  while(tempArr.length > 0 ){
+    if(tempArr.length < 3){
+      balancedArr = balancedArr.concat(tempArr);
+      break;
+    }else{
+      var mid = Math.floor(tempArr.length/2);
+      var midL = Math.floor(tempArr.length * 0.25);
+      var midR = Math.floor(tempArr.length * 0.75);
+      balancedArr.push(tempArr[mid]);
+      balancedArr.push(tempArr[midL]);
+      balancedArr.push(tempArr[midR]);
+      tempArr.splice(midR, 1);
+      tempArr.splice(mid, 1);
+      tempArr.splice(midL, 1);
+    }
+  }
+  console.log("balanced Array: ", balancedArr);
+  this.value = balancedArr[0];
+  this.left = undefined;
+  this.right = undefined;
+  for(var i = 1; i < balancedArr.length; i++){
+    this.insert(balancedArr[i]);
+  }
+};
+//
 /*
  * Complexity: What is the time complexity of the above functions?
  */

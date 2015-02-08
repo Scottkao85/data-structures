@@ -37,4 +37,37 @@ describe('binarySearchTree', function() {
     console.log(array);
     expect(array).to.eql([5,2,3]);
   });
+
+  it('should execute a callback on every value in a tree using "breadthFirstLog"', function(){
+    var array = [];
+    var func = function(value){ array.push(value); };
+    binarySearchTree.insert(5);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(4);
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(8);
+    binarySearchTree.breadthFirstLog(func);
+    console.log(array);
+    expect(array).to.eql([5,3,7,2,4,6,8]);
+  });
+  it('should rebalance using "rebalanceTree"', function(){
+    var arrayUneven = [];
+    var arrayBalanced =[];
+    var func = function(value){ arrayUneven.push(value); };
+    var func1 = function(value){ arrayBalanced.push(value); };
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(8);
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(10);
+    binarySearchTree.insert(11);
+    binarySearchTree.insert(12);
+    binarySearchTree.breadthFirstLog(func);
+    expect(arrayUneven).to.eql([5,6,7,8,9,10,11,12]);
+    binarySearchTree.rebalanceTree(func);
+    binarySearchTree.breadthFirstLog(func1);
+    expect(arrayBalanced).to.eql([9, 7, 11, 6, 8, 10, 12, 5]);
+  });
 });
